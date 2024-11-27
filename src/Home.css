@@ -1,0 +1,52 @@
+.Home-container {
+  padding: 50px 100px;
+}
+
+.Dictionary-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0px;
+}
+
+.Dictionary-container {
+  padding: 20px;
+  box-sizing: border-box;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Dictionary-header {
+  flex-shrink: 0; /* 헤더 고정 */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Dictionary-search {
+  flex-shrink: 0; /* 검색창 고정 */
+  display: flex;
+  height: 60px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.Dictionary-results {
+  flex-grow: 1; /* 나머지 공간을 차지 */
+  max-height: 400px;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+/* 기본적으로 테마 클래스 내에서 원하는 스타일을 오버라이드 */
+/* .ag-theme-quartz .ag-header-cell {
+  background-color: #2a2a2a; 
+  color: #ffffff; 
+}
+
+.ag-theme-quartz .ag-cell {
+  background-color: #f9f9f9; 
+  color: #333;
+  font-size: 14px; 
+}  */
