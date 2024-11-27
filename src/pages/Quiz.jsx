@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import QuizMain from "../components/QuizMain";
 import DiaryItem from "../components/DiaryItem";
 import useQuizStore from "../stores/quiz";
-import Test from "../assets/test.png";
+import Taegeukgi from "../assets/korea.png"; // PNG 파일 경로
 
 const Quiz = () => {
   const { data, toggleQuizCheck, deleteCheckedQuiz, allDeleteQuiz } =
@@ -14,6 +14,8 @@ const Quiz = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [rowData, setRowData] = useState([]);
+  const [base64Image, setBase64Image] = useState(""); // Base64 이미지 상태 추가
+
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
@@ -55,17 +57,50 @@ const Quiz = () => {
     setRowData(formattedData);
   }, [data]);
 
+  // Base64 변환 함수
+  const convertToBase64 = (url) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous"; // CORS 허용
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const base64 = canvas.toDataURL("image/png"); // PNG 형식으로 변환
+        resolve(base64);
+      };
+      img.onerror = reject;
+      img.src = url;
+    });
+  };
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const base64 = await convertToBase64(Taegeukgi);
+        setBase64Image(base64);
+      } catch (error) {
+        console.error("이미지 변환 오류:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
   return (
     <div className="Quiz-wrapper">
       <div className="Quiz-container text-[48px]">
         <div className="flex items-center justify-center">
-          <img
-            src={Test}
-            alt="Test"
-            crossOrigin="anonymous" // CORS 허용
-            style={{ width: "200px", height: "auto" }}
-          />
-          <SiQuizlet className="mr-[25px]" />{" "}
+          {base64Image && ( // Base64 이미지가 있을 때만 렌더링
+            <img
+              src={base64Image}
+              alt="Taegeukgi"
+              style={{ width: "50px", height: "50px" }}
+            />
+          )}
+          <SiQuizlet className="mx-[25px]" />{" "}
           <span className="font-bold">언어 퀴즈</span>
           <PiExclamationMarkFill className="ml-[25px] text-[68px]" />
         </div>
