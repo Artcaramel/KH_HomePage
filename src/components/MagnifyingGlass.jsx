@@ -30,7 +30,7 @@ const MagnifyingGlass = ({ onClose, initialPosition }) => {
   // 확대 렌더링 로직 분리
   const renderMagnification = useCallback(() => {
     if (screenshotCanvasRef.current && canvasRef.current) {
-      const magnification = 2; // 확대 배율
+      const magnification = 3; // 확대 배율
       const ctx = canvasRef.current.getContext("2d");
 
       const sourceSize = 100; // 원본 이미지 크기
